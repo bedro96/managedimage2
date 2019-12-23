@@ -1,5 +1,13 @@
-variable "resourcegroup_name" {
-    description = "The name of resource group"
+variable "baseos_resourcegroup_name" {
+    description = "The name of resource group, where packer temp disk is located"
+    default = "terraformrg"
+}
+variable "packertempdisk_name" {
+    description = "The name of PackerTemp disk"
+    default = "PackerTemp"
+}
+variable "image_resourcegroup_name" {
+    description = "The name of resource group, where managed image will be created"
     default = "terraformrg"
 }
 variable "location" {
@@ -9,7 +17,4 @@ variable "location" {
 variable "managed_image_name" {
     description = "The name of managed image to be created."
     default = "imgtestwithdatadisk1"
-}
-variable "packer_os_managed_disk_id" {
-    description = "The id of managed image to created from Packer Azure-chroot."
 }
