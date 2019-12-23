@@ -16,5 +16,5 @@ variable "location" {
 }
 variable "managed_image_name" {
     description = "The name of managed image to be created."
-    default = "imgtestwithdatadisk1"
+    default = "imgtestwithdatadisk"
 }
