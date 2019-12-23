@@ -10,8 +10,8 @@ data "azurerm_resource_group" "baseos_resourcegroup_name" {
 
 # Get PackerTemp disk information.
 data "azurerm_managed_disk" "packertemp_disk" {
-  name                = "PackerTemp"
-  resource_group_name = "${data.azurerm_resource_group.baseos_resourcegroup_name}"
+  name                = "${var.packertempdisk_name}"
+  resource_group_name = "${data.azurerm_resource_group.baseos_resourcegroup_name.name}"
 }
 
 # Create a resource group if it doesn’t exist
@@ -54,5 +54,16 @@ resource "azurerm_image" "packer-img-w-datadisk" {
         caching = "ReadWrite"
         managed_disk_id = "${azurerm_managed_disk.blank_datadisk.id}"
         size_gb = 250
+    }
+}
+
+resource "null_resource" "az_delete_packer_disk" {
+    depends_on = ["azurerm_image.packer-img-w-datadisk"]
+    provisioner "local-exec" {
+        command = "az disk delete -n $NAME -g $GROUP --yes"
+        environment = {
+            NAME    = "${var.packertempdisk_name}"
+            GROUP   = "${data.azurerm_resource_group.baseos_resourcegroup_name.name}"
+        }
     }
 }
