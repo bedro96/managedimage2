@@ -7,5 +7,5 @@ Please refer to **https://github.com/bedro96/chroot** for example of Azure-Chroo
 2. Run following terraform command to create the Azure managed image. Also note that this script will **DELETE** the packer temp disk, once the Azure managed image is created.
 ```bash
 terraform plan -out=managedimage_from_packer.out
-terraform apply terraform plan -out=managedimage_from_packer.out
+terraform apply managedimage_from_packer.out
 ```
